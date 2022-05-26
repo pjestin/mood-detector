@@ -13,7 +13,7 @@ const AUTH_TOKEN = "487021076163-bQt9efTKJKpFSxWsno3V2QeIP1pJXw"
 func main() {
 	reddit := io.RedditClient{}
 	reddit.Init(AUTH_TOKEN)
-	posts, err := reddit.GetHotPosts("r/CryptoCurrrency")
+	posts, err := reddit.GetHotPosts("r/CryptoCurrency")
 	if err != nil {
 		log.Fatalln("Error when getting hot posts from Reddit:", err)
 	}

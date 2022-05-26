@@ -58,7 +58,7 @@ func (c *RedditClient) Get(path string, params map[string]string) ([]byte, error
 }
 
 func (c *RedditClient) GetHotPosts(subreddit string) ([]model.PostData, error) {
-	b, err := c.Get("/r/CryptoCurrency/hot", map[string]string{"limit": "100", "show": "all"})
+	b, err := c.Get(fmt.Sprintf("/%s/hot", subreddit), map[string]string{"limit": "100", "show": "all"})
 	if err != nil {
 		return nil, err
 	}
