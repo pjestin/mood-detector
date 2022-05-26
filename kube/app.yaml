@@ -9,7 +9,10 @@ spec:
       template:
         spec:
           containers:
-          - name: app
-            image: mood-detector
-            imagePullPolicy: Never
+            - name: app
+              image: mood-detector
+              imagePullPolicy: Never
+              env:
+                - name: SUBREDDIT
+                  value: "r/CryptoCurrency"
           restartPolicy: Never

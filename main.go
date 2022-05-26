@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"time"
+	"os"
 
 	"github.com/pjestin/mood-detector/io"
 	"github.com/pjestin/mood-detector/util"
@@ -13,7 +14,7 @@ const AUTH_TOKEN = "487021076163-bQt9efTKJKpFSxWsno3V2QeIP1pJXw"
 func main() {
 	reddit := io.RedditClient{}
 	reddit.Init(AUTH_TOKEN)
-	posts, err := reddit.GetHotPosts("r/CryptoCurrency")
+	posts, err := reddit.GetHotPosts(os.Getenv("FOO"))
 	if err != nil {
 		log.Fatalln("Error when getting hot posts from Reddit:", err)
 	}
