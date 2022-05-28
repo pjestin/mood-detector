@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: app
 spec:
-  schedule: "0 * * * *"
+  schedule: "0 * * * *" # every 5 min
   jobTemplate:
     spec:
       template:

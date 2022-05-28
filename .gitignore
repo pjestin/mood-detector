@@ -16,3 +16,5 @@
 
 release
 redis-volume
+
+.env
