@@ -1,0 +1,1 @@
+0 * * * * root cd /app && ./mood_trade >> /var/log/cron.log 2>&1

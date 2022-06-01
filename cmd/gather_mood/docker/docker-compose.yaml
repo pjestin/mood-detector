@@ -1,8 +1,8 @@
 version: "3"
 services:
-  mood-detector:
-    image: mood-detector
-    container_name: mood-detector
+  gather-mood:
+    image: gather-mood
+    container_name: gather-mood
     restart: always
     environment:
       SUBREDDIT: "r/CryptoCurrency"

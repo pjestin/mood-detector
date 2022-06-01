@@ -1,0 +1,1 @@
+0 * * * * root cd /app && ./gather_mood >> /var/log/cron.log 2>&1

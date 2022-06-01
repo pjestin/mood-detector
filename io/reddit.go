@@ -13,11 +13,6 @@ import (
 	"github.com/pjestin/mood-detector/model"
 )
 
-type RedditClient struct {
-	authToken string
-	client    http.Client
-}
-
 func buildParamString(params map[string]string) string {
 	paramString := ""
 	for key, value := range params {
@@ -27,6 +22,11 @@ func buildParamString(params map[string]string) string {
 		paramString += key + "=" + value
 	}
 	return paramString
+}
+
+type RedditClient struct {
+	authToken string
+	client    http.Client
 }
 
 func (c *RedditClient) Init() error {
