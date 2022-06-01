@@ -6,12 +6,12 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-const REDIS_ADDRESS = "redis.redis:6379"
-
 type RedisClient struct {
 	client redis.Client
 	ctx    context.Context
 }
+
+const REDIS_ADDRESS = "redis:6379"
 
 func (c *RedisClient) Init() {
 	c.client = *redis.NewClient(&redis.Options{

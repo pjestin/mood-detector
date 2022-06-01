@@ -1,0 +1,1 @@
+0 * * * * root cd /app && ./mood-detector >> /var/log/cron.log 2>&1

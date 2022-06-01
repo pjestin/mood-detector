@@ -1,0 +1,17 @@
+version: "3"
+services:
+  mood-detector:
+    image: mood-detector
+    container_name: mood-detector
+    restart: always
+    environment:
+      SUBREDDIT: "r/CryptoCurrency"
+
+  redis:
+    image: redis:7.0.0
+    container_name: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - /mnt/data:/data
