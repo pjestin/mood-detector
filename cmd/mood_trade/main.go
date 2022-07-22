@@ -48,22 +48,39 @@ func main() {
 	binance := io.BinanceClient{}
 	binance.Init()
 
+	isInBoughtState := false
+
+	// Get last trade
+	lastTrade, err := binance.GetLastTrade(symbol)
+	if err != nil {
+		log.Println("Unable to get last trade:", err)
+	} else {
+		log.Println("Last trade:", lastTrade)
+		isInBoughtState = lastTrade.IsBuyer
+	}
+
+	log.Println("In bought state?", isInBoughtState)
+
 	// Trade on Binance
-	if mood >= mood_upper_bound {
+	if isInBoughtState && mood >= mood_upper_bound {
 		log.Println("Posting sell order")
-		b, err := binance.PostOrder(symbol, "MARKET", "SELL", quantity)
+		order, err := binance.PostOrder(symbol, "MARKET", "SELL", quantity)
 		if err != nil {
 			log.Fatalln("Unable to post sell order:", err)
 		}
-		log.Printf("Sell order successful: %s", b)
+		log.Printf("Sell order successful: %#v", order)
+		return
 	}
 
-	if mood <= mood_lower_bound {
+	if !isInBoughtState && mood <= mood_lower_bound {
 		log.Println("Posting buy order")
-		b, err := binance.PostOrder(symbol, "MARKET", "BUY", quantity)
+		order, err := binance.PostOrder(symbol, "MARKET", "BUY", quantity)
 		if err != nil {
 			log.Fatalln("Unable to post buy order:", err)
 		}
-		log.Printf("Buy order successful: %s", b)
+		log.Printf("Buy order successful: %#v", order)
+		return
 	}
+
+	log.Println("No trade to be done")
 }

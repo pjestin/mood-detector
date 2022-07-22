@@ -1,4 +1,4 @@
-package model
+package reddit
 
 type Post struct {
 	Kind string

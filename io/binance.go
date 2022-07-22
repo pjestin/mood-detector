@@ -1,13 +1,14 @@
 package io
 
 import (
-	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"time"
 
+	"github.com/pjestin/mood-detector/model/binance"
 	"github.com/pjestin/mood-detector/util"
 )
 
@@ -38,11 +39,10 @@ func (c *BinanceClient) buildParamString(params map[string]string) string {
 	return paramString
 }
 
-func (c *BinanceClient) Post(path string, params map[string]string) ([]byte, error) {
+func (c *BinanceClient) SendRequest(method string, path string, params map[string]string) ([]byte, error) {
 	paramString := c.buildParamString(params)
-	bodyBytes := []byte(paramString)
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("https://api.binance.com%s", path), bytes.NewReader(bodyBytes))
+	req, err := http.NewRequest(method, fmt.Sprintf("https://api.binance.com%s?%s", path, paramString), nil)
 
 	if err != nil {
 		return nil, err
@@ -72,7 +72,25 @@ func (c *BinanceClient) Post(path string, params map[string]string) ([]byte, err
 	return b, err
 }
 
-func (c *BinanceClient) PostOrder(symbol string, orderType string, side string, quantity string) ([]byte, error) {
+func (c *BinanceClient) GetLastTrade(symbol string) (binance.Trade, error) {
+	params := map[string]string{
+		"symbol": symbol,
+		"limit":  "1",
+	}
+
+	b, err := c.SendRequest("GET", "/api/v3/myTrades", params)
+
+	if err != nil {
+		return binance.Trade{}, err
+	}
+
+	var body []binance.Trade
+	err = json.Unmarshal(b, &body)
+
+	return body[0], err
+}
+
+func (c *BinanceClient) PostOrder(symbol string, orderType string, side string, quantity string) (binance.Order, error) {
 	params := map[string]string{
 		"symbol":   symbol,
 		"type":     orderType,
@@ -80,5 +98,14 @@ func (c *BinanceClient) PostOrder(symbol string, orderType string, side string, 
 		"quantity": quantity,
 	}
 
-	return c.Post("/api/v3/order", params)
+	b, err := c.SendRequest("POST", "/api/v3/order", params)
+
+	if err != nil {
+		return binance.Order{}, err
+	}
+
+	var body binance.Order
+	err = json.Unmarshal(b, &body)
+
+	return body, err
 }

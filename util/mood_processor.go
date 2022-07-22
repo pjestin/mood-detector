@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/pjestin/mood-detector/model"
+	"github.com/pjestin/mood-detector/model/reddit"
 )
 
 var NEGATIVE_WORDS = SetFromArray([]string{"bear", "red", "bad", "police", "sell", "sells", "sold", "selling",
@@ -38,7 +38,7 @@ func processTextMood(text string) int {
 	return mood
 }
 
-func ProcessPostMood(posts []model.PostData) int {
+func ProcessPostMood(posts []reddit.PostData) int {
 	log.Println("Processing post mood; number of posts:", len(posts))
 	var mood int
 	for _, post := range posts {

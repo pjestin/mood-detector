@@ -8,7 +8,7 @@ RUN apt-get -y install cron
 
 RUN go build ./cmd/mood_trade
 
-ADD cmd/gather_mood/docker/crontab /etc/cron.d/mood-detector-cron
+ADD cmd/mood_trade/docker/crontab /etc/cron.d/mood-detector-cron
 RUN chmod 0644 /etc/cron.d/mood-detector-cron
 RUN touch /var/log/cron.log
 

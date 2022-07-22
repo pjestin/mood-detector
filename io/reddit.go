@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/pjestin/mood-detector/model"
+	"github.com/pjestin/mood-detector/model/reddit"
 )
 
 func buildParamString(params map[string]string) string {
@@ -67,7 +67,7 @@ func (c *RedditClient) Init() error {
 		return err
 	}
 
-	var body model.AuthTokenResponse
+	var body reddit.AuthTokenResponse
 	err = json.Unmarshal(b, &body)
 	if err != nil {
 		return err
@@ -102,19 +102,19 @@ func (c *RedditClient) Get(path string, params map[string]string) ([]byte, error
 	return b, err
 }
 
-func (c *RedditClient) GetHotPosts(subreddit string) ([]model.PostData, error) {
+func (c *RedditClient) GetHotPosts(subreddit string) ([]reddit.PostData, error) {
 	b, err := c.Get(fmt.Sprintf("/%s/hot", subreddit), map[string]string{"limit": "100", "show": "all"})
 	if err != nil {
 		return nil, err
 	}
 
-	var body model.Listing
+	var body reddit.Listing
 	err = json.Unmarshal(b, &body)
 	if err != nil {
 		return nil, err
 	}
 
-	var posts []model.PostData
+	var posts []reddit.PostData
 	for _, post := range body.Data.Children {
 		posts = append(posts, post.Data)
 	}

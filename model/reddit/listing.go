@@ -1,4 +1,4 @@
-package model
+package reddit
 
 type Listing struct {
 	Kind string

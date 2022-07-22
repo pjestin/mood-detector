@@ -1,4 +1,4 @@
-package model
+package reddit
 
 type AuthTokenResponse struct {
 	AccessToken string `json:"access_token"`

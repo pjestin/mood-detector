@@ -1,4 +1,4 @@
-package model
+package reddit
 
 type ListingData struct {
 	Dist     int
