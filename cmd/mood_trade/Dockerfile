@@ -3,7 +3,7 @@ FROM golang:1.19.1
 ADD . /app
 WORKDIR /app
 
-RUN apt-get update
+RUN apt-get update && apt-get -y upgrade
 RUN apt-get -y install cron
 
 RUN go build ./cmd/mood_trade

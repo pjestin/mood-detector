@@ -8,6 +8,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/pjestin/mood-detector/io"
+	"github.com/pjestin/mood-detector/util"
 )
 
 func main() {
@@ -34,12 +35,24 @@ func main() {
 		log.Fatalln("Error when marshalling posts:", err)
 	}
 
-	redis := io.RedisClient{}
-	redis.Init(1)
+	mood := util.ProcessPostMood(posts)
+	log.Println("Total mood:", mood)
+
 	now := time.Now().Format(time.RFC3339)
-	log.Println("Adding posts to Redis")
-	err = redis.Set(now, posts_json)
+
+	log.Println("Adding mood to Redis")
+	redis_mood := io.RedisClient{}
+	redis_mood.Init(0)
+	err = redis_mood.Set(now, mood)
 	if err != nil {
-		log.Fatalln("Error when setting posts in Redis:", err)
+		log.Fatalln("Error when adding mood to Redis:", err)
+	}
+
+	log.Println("Adding posts to Redis")
+	redis_reddit := io.RedisClient{}
+	redis_reddit.Init(1)
+	err = redis_reddit.Set(now, posts_json)
+	if err != nil {
+		log.Fatalln("Error when setting posts to Redis:", err)
 	}
 }

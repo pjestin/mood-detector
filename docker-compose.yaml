@@ -1,14 +1,5 @@
 version: "3"
 services:
-  gather-mood:
-    build:
-      context: .
-      dockerfile: cmd/gather_mood/Dockerfile
-    container_name: gather-mood
-    restart: always
-    environment:
-      SUBREDDIT: "r/CryptoCurrency"
-
   gather-reddit:
     build:
       context: .
