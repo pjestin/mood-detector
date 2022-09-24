@@ -1,4 +1,4 @@
-FROM golang:1.18
+FROM golang:1.19.1
 
 ADD . /app
 WORKDIR /app
@@ -6,9 +6,9 @@ WORKDIR /app
 RUN apt-get update
 RUN apt-get -y install cron
 
-RUN go build ./cmd/gather_mood
+RUN go build ./cmd/mood_trade
 
-ADD cmd/gather_mood/docker/crontab /etc/cron.d/mood-detector-cron
+ADD cmd/mood_trade/crontab /etc/cron.d/mood-detector-cron
 RUN chmod 0644 /etc/cron.d/mood-detector-cron
 RUN touch /var/log/cron.log
 

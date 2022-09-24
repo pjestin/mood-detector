@@ -1,0 +1,41 @@
+version: "3"
+services:
+  gather-mood:
+    build:
+      context: .
+      dockerfile: cmd/gather_mood/Dockerfile
+    container_name: gather-mood
+    restart: always
+    environment:
+      SUBREDDIT: "r/CryptoCurrency"
+
+  gather-reddit:
+    build:
+      context: .
+      dockerfile: cmd/gather_reddit/Dockerfile
+    container_name: gather-reddit
+    restart: always
+    environment:
+      SUBREDDIT: "r/CryptoCurrency"
+
+  mood-trade:
+    build:
+      context: .
+      dockerfile: cmd/mood_trade/Dockerfile
+    container_name: mood-trade
+    restart: always
+    environment:
+      SUBREDDIT: "r/CryptoCurrency"
+      BINANCE_SYMBOL: ETHUSDT
+      BINANCE_QUANTITY: "0.02"
+      MOOD_UPPER_BOUND: 150
+      MOOD_LOWER_BOUND: -150
+
+  redis:
+    image: redis:7.0.5
+    container_name: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - /mnt/data:/data

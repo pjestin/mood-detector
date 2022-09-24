@@ -13,15 +13,15 @@ type RedisClient struct {
 
 const REDIS_ADDRESS = "redis:6379"
 
-func (c *RedisClient) Init() {
+func (c *RedisClient) Init(db int) {
 	c.client = *redis.NewClient(&redis.Options{
 		Addr:     REDIS_ADDRESS,
 		Password: "", // no password set
-		DB:       0,  // use default DB
+		DB:       db,
 	})
 	c.ctx = context.Background()
 }
 
-func (c *RedisClient) Set(key string, value int) error {
+func (c *RedisClient) Set(key string, value interface{}) error {
 	return c.client.Set(c.ctx, key, value, 0).Err()
 }
