@@ -1,1 +1,0 @@
-0 * * * * root cd /app && ./gather_reddit >> /var/log/cron.log 2>&1
