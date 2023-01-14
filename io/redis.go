@@ -25,3 +25,12 @@ func (c *RedisClient) Init(db int) {
 func (c *RedisClient) Set(key string, value interface{}) error {
 	return c.client.Set(c.ctx, key, value, 0).Err()
 }
+
+func (c *RedisClient) Get(key string) (string, error) {
+	res := c.client.Get(c.ctx, key)
+	if res.Err() != nil {
+		return "", res.Err()
+	}
+
+	return res.String(), nil
+}
