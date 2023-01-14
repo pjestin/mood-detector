@@ -9,7 +9,7 @@ services:
     environment:
       SUBREDDIT: "r/CryptoCurrency"
       BINANCE_SYMBOL: ETHUSDT
-      BINANCE_QUANTITY: "0.6"
+      BINANCE_QUANTITY: "0.5"
       MOOD_UPPER_BOUND: 150
       MOOD_LOWER_BOUND: -150
 
