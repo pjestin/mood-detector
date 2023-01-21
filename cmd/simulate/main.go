@@ -119,7 +119,7 @@ type State struct {
 
 const (
 	MIN_SELL_MOOD = 150
-	MAX_BUY_MOOD  = -140
+	MAX_BUY_MOOD  = -150
 )
 
 func main() {

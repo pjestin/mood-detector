@@ -36,7 +36,6 @@ func processTextMood(text string) int {
 }
 
 func ProcessPostMood(posts []reddit.PostData) int {
-	// log.Println("Processing post mood; number of posts:", len(posts))
 	var mood int
 	for _, post := range posts {
 		titleMood := processTextMood(post.Title)

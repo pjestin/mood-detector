@@ -11,7 +11,7 @@ type RedisClient struct {
 	ctx    context.Context
 }
 
-const REDIS_ADDRESS = "localhost:6379"
+const REDIS_ADDRESS = "redis:6379"
 
 func (c *RedisClient) Init(db int) {
 	c.client = *redis.NewClient(&redis.Options{
