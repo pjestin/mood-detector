@@ -1,6 +1,6 @@
 package reddit
 
 type ListingData struct {
-	Dist     int
-	Children []Post
+	Dist     int    `json:"dist"`
+	Children []Post `json:"children"`
 }

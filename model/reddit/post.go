@@ -1,6 +1,6 @@
 package reddit
 
 type Post struct {
-	Kind string
-	Data PostData
+	Kind string   `json:"kind"`
+	Data PostData `json:"data"`
 }
