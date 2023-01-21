@@ -11,7 +11,7 @@ type RedisClient struct {
 	ctx    context.Context
 }
 
-const REDIS_ADDRESS = "redis:6379"
+const REDIS_ADDRESS = "localhost:6379"
 
 func (c *RedisClient) Init(db int) {
 	c.client = *redis.NewClient(&redis.Options{
@@ -24,4 +24,40 @@ func (c *RedisClient) Init(db int) {
 
 func (c *RedisClient) Set(key string, value interface{}) error {
 	return c.client.Set(c.ctx, key, value, 0).Err()
+}
+
+func (c *RedisClient) GetKeys() ([]string, error) {
+	res := c.client.Scan(c.ctx, 0, "*", 0)
+	if res.Err() != nil {
+		return nil, res.Err()
+	}
+
+	iter := res.Iterator()
+
+	var keys []string
+	for iter.Next(c.ctx) {
+		keys = append(keys, iter.Val())
+	}
+
+	return keys, nil
+}
+
+func (c *RedisClient) GetEntries() (map[string]string, error) {
+	keys, err := c.GetKeys()
+	if err != nil {
+		return nil, err
+	}
+
+	entries := make(map[string]string)
+
+	for _, key := range keys {
+		res := c.client.Get(c.ctx, key)
+		if res.Err() != nil {
+			return nil, res.Err()
+		}
+
+		entries[key] = res.Val()
+	}
+
+	return entries, nil
 }
