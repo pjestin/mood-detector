@@ -14,7 +14,7 @@ services:
       MOOD_LOWER_BOUND: -150
 
   redis:
-    image: redis:7.0.5
+    image: redis:7.0.8
     container_name: redis
     restart: always
     ports:
