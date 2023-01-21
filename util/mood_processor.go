@@ -12,13 +12,15 @@ var NEGATIVE_WORDS = SetFromArray([]string{"bear", "red", "bad", "police", "sell
 	"plunges", "plunged", "plunging", "shrink", "shrinks", "shrinking", "shrinked", "avoid", "avoids", "avoiding",
 	"avoided", "break", "breaks", "breaking", "broke", "broken", "withdraw", "withdraws", "withdrew", "withdrawn",
 	"wary", "risk", "risks", "panic", "panics", "panicking", "panicked", "issue", "issues", "drain", "drains",
-	"drained", "draining"})
+	"drained", "draining", "bankruptcy", "bankruptcies", "nonsense", "shenanigan", "shenanigans", "scandal",
+	"scandals", "dump", "dumped", "worse", "worst", "terrible"})
 
 var POSITIVE_WORDS = SetFromArray([]string{"bull", "green", "good", "recover", "recovers", "recovering",
 	"recovered", "amazing", "future", "believe", "believes", "believing", "believed", "unwavering", "confidence",
 	"heal", "heals", "healing", "healed", "huge", "adoption", "adopt", "adopts", "adopted", "revival", "launch",
 	"buy", "buys", "buying", "bought", "profit", "profits", "hodl", "hodler", "hodlers", "hold", "holds", "holding",
-	"held", "safe", "save", "saves", "saving", "sure", "skyrocket", "skyrocketed", "skyrockets"})
+	"held", "safe", "save", "saves", "saving", "sure", "skyrocket", "skyrocketed", "skyrockets", "pump", "pumped",
+	"euphoria", "better", "best", "great"})
 
 func processTextMood(text string) int {
 	re := regexp.MustCompile(`\W`)

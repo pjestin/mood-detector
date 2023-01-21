@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"math"
 	"os"
 	"sort"
 	"strconv"
@@ -118,8 +119,8 @@ type State struct {
 }
 
 const (
-	MIN_SELL_MOOD = 150
-	MAX_BUY_MOOD  = -150
+	MIN_SELL_MOOD = 160
+	MAX_BUY_MOOD  = -160
 )
 
 func main() {
@@ -154,5 +155,5 @@ func main() {
 		}
 	}
 
-	log.Println("Capital:", state.capital)
+	log.Printf("Capital: %.4f; expected factor over 1 year: %.4f", state.capital, math.Pow(state.capital, 365/duration))
 }
