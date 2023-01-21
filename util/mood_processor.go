@@ -1,7 +1,6 @@
 package util
 
 import (
-	"log"
 	"regexp"
 	"strings"
 
@@ -27,11 +26,9 @@ func processTextMood(text string) int {
 	for _, word := range re.Split(text, -1) {
 		lower := strings.ToLower(word)
 		if POSITIVE_WORDS.Contains(lower) {
-			log.Println("Positive word:", lower)
 			mood++
 		}
 		if NEGATIVE_WORDS.Contains(lower) {
-			log.Println("Negative word:", lower)
 			mood--
 		}
 	}
@@ -39,14 +36,13 @@ func processTextMood(text string) int {
 }
 
 func ProcessPostMood(posts []reddit.PostData) int {
-	log.Println("Processing post mood; number of posts:", len(posts))
+	// log.Println("Processing post mood; number of posts:", len(posts))
 	var mood int
 	for _, post := range posts {
 		titleMood := processTextMood(post.Title)
 		mood += 10 * titleMood
 		textMood := processTextMood(post.Selftext)
 		mood += textMood
-		log.Println("Title mood:", titleMood, "; Text mood:", textMood)
 	}
 	return mood
 }
