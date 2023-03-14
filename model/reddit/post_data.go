@@ -9,4 +9,5 @@ type PostData struct {
 	Ups         float64 `json:"ups"`
 	Score       float64 `json:"score"`
 	UpvoteRatio float64 `json:"upvote_ratio"`
+	CreatedUTC  float64 `json:"created_utc"`
 }
