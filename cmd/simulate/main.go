@@ -14,6 +14,8 @@ import (
 	"github.com/pjestin/mood-detector/util"
 )
 
+const REDIS_ADDRESS = "localhost:6379"
+
 type DataPoint struct {
 	instant     time.Time
 	price       string
@@ -61,7 +63,7 @@ func getDataPoints() ([]DataPoint, error) {
 	}
 
 	redis := io.RedisClient{}
-	redis.Init(1)
+	redis.Init(1, REDIS_ADDRESS)
 	redisEntries, err := redis.GetEntries()
 	if err != nil {
 		return nil, err
@@ -118,8 +120,8 @@ type State struct {
 }
 
 const (
-	MIN_SELL_MOOD = 150
-	MAX_BUY_MOOD  = -150
+	MIN_SELL_MOOD = 50
+	MAX_BUY_MOOD  = -50
 )
 
 func main() {
@@ -152,6 +154,15 @@ func main() {
 			state.isBought = true
 			state.buyPrice = price
 		}
+	}
+
+	if state.isBought {
+		price, err := strconv.ParseFloat(dataPoints[len(dataPoints) - 1].price, 64)
+		if err != nil {
+			log.Fatalln("Error parsing price", err)
+		}
+		log.Println("Instant:", dataPoints[len(dataPoints) - 1].instant, "; selling at", price)
+		state.capital *= price / state.buyPrice
 	}
 
 	log.Println("Capital:", state.capital)

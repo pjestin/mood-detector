@@ -13,6 +13,8 @@ import (
 	"github.com/pjestin/mood-detector/util"
 )
 
+const REDIS_ADDRESS = "redis:6379"
+
 func storePostData(posts []reddit.PostData, mood int) {
 	posts_json, err := json.Marshal(&posts)
 	if err != nil {
@@ -23,7 +25,7 @@ func storePostData(posts []reddit.PostData, mood int) {
 
 	log.Println("Adding mood to Redis")
 	redis_mood := io.RedisClient{}
-	redis_mood.Init(0)
+	redis_mood.Init(0, REDIS_ADDRESS)
 	err = redis_mood.Set(now, mood)
 	if err != nil {
 		log.Fatalln("Error when adding mood to Redis:", err)
@@ -31,7 +33,7 @@ func storePostData(posts []reddit.PostData, mood int) {
 
 	log.Println("Adding posts to Redis")
 	redis_reddit := io.RedisClient{}
-	redis_reddit.Init(1)
+	redis_reddit.Init(1, REDIS_ADDRESS)
 	err = redis_reddit.Set(now, posts_json)
 	if err != nil {
 		log.Fatalln("Error when setting posts to Redis:", err)

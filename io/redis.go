@@ -11,11 +11,9 @@ type RedisClient struct {
 	ctx    context.Context
 }
 
-const REDIS_ADDRESS = "redis:6379"
-
-func (c *RedisClient) Init(db int) {
+func (c *RedisClient) Init(db int, redisAddress string) {
 	c.client = *redis.NewClient(&redis.Options{
-		Addr:     REDIS_ADDRESS,
+		Addr:     redisAddress,
 		Password: "", // no password set
 		DB:       db,
 	})
